@@ -17,6 +17,12 @@
           "appId": "d1i7g92hfrd9va",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "amplifyclitodoappc6058fff": {}
+      },
+      "api": {
+        "amplifyclitodoapp": {}
       }
     }
   }
