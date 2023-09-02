@@ -40,9 +40,9 @@ const TodosIndex = () => {
         </Grid>
         <Grid item md={6}>
           <Link href="/todos/new">
-            {/* <Button component="a" variant="contained" color="primary"> */}
-            New
-            {/* </Button> */}
+            <Button variant="contained" color="primary">
+              New
+            </Button>
           </Link>
         </Grid>
       </Grid>

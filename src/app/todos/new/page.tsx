@@ -17,18 +17,18 @@ Amplify.configure(awsconfig);
 const TodosNew = () => {
   const router = useRouter();
 
-  const onSubmit = async (newTodo) => {
-    (await API.graphql(
-      graphqlOperation(createTodo, {
-        input: {
-          ...newTodo,
-          completed: false
-          //   timestamp: Math.floor(Date.now() / 1000),
-        },
-      })
-    )) as GraphQLResult<CreateTodoMutation>;
-    router.push("/");
-  };
+  //   const onSubmit = async (newTodo: any) => {
+  //     (await API.graphql(
+  //       graphqlOperation(createTodo, {
+  //         input: {
+  //           ...newTodo,
+  //           completed: false,
+  //           //   timestamp: Math.floor(Date.now() / 1000),
+  //         },
+  //       })
+  //     )) as GraphQLResult<CreateTodoMutation>;
+  //     router.push("/");
+  //   };
 
   return (
     <>
@@ -44,7 +44,7 @@ const TodosNew = () => {
           </Link>
         </Grid>
       </Grid>
-      <Form onSubmit={onSubmit} />
+      {/* <Form onSubmit={onSubmit} /> */}
     </>
   );
 };
