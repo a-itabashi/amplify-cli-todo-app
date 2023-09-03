@@ -7,6 +7,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import RecoilProvider from "@/store/Provider";
 import { Container } from "@mui/material";
 import "@aws-amplify/ui-react/styles.css";
+import { Header } from "@/components/Header";
+import { AuthListener } from "@/components/AuthListener";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <RecoilProvider>
+        <AuthListener />
         {/* <head /> */}
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <body>
+            <Header />
             <Container>{children}</Container>
           </body>
         </ThemeProvider>

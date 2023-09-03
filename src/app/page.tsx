@@ -12,9 +12,9 @@ import { Container, Button, Grid } from "@mui/material";
 import { ListTodosQuery } from "@/API";
 
 import { useRecoilState } from "recoil";
-import { todosState } from "@/store/todos";
+import { todosState } from "@/store/todoState";
 import { listTodos } from "@/graphql/queries";
-import { Todo } from "@/components/todo";
+import { Todo } from "@/components/Todo";
 
 Amplify.configure(awsconfig);
 

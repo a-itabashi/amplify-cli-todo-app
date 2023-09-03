@@ -17,9 +17,17 @@ import {
 } from "@mui/material";
 
 import { useRecoilState } from "recoil";
-import { todosState } from "@/store/todos";
+import { todosState } from "@/store/todoState";
 import { FC } from "react";
 
+// type Todo = {
+//   __typename: "Todo";
+//   id: string;
+//   name: string;
+//   completed: boolean;
+//   createdAt: string;
+//   updatedAt: string;
+// } | null;
 type Todo = {
   __typename: "Todo";
   id: string;
@@ -27,9 +35,9 @@ type Todo = {
   completed: boolean;
   createdAt: string;
   updatedAt: string;
-} | null;
+};
 
-const Todo: FC<any> = ({ todo }) => {
+const Todo: FC<Todo> = ({ todo }) => {
   const [todos, setTodos] = useRecoilState(todosState);
 
   const onArchive = async () => {
