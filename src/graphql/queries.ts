@@ -10,6 +10,7 @@ export const getTodo = /* GraphQL */ `
       completed
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -26,8 +27,10 @@ export const listTodos = /* GraphQL */ `
         completed
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;

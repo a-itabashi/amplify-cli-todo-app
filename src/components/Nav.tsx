@@ -1,7 +1,6 @@
 "use client";
 import { Auth } from "aws-amplify";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
-import { useEffect, useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import Link from "next/link";
 import { authState } from "@/store/authState";
@@ -19,7 +18,7 @@ const Nav = () => {
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="static">
       <Toolbar>
         <Typography variant="h5" color="inherit">
           <Link href={"/"}>Home</Link>

@@ -14,21 +14,24 @@ import Form from "@/components/Form";
 
 Amplify.configure(awsconfig);
 
-const TodosNew = () => {
+const TodoNewPage = () => {
   const router = useRouter();
 
-  //   const onSubmit = async (newTodo: any) => {
-  //     (await API.graphql(
-  //       graphqlOperation(createTodo, {
-  //         input: {
-  //           ...newTodo,
-  //           completed: false,
-  //           //   timestamp: Math.floor(Date.now() / 1000),
-  //         },
-  //       })
-  //     )) as GraphQLResult<CreateTodoMutation>;
-  //     router.push("/");
-  //   };
+  const onSubmit = async (name: string) => {
+    try {
+      const result = (await API.graphql(
+        graphqlOperation(createTodo, {
+          input: {
+            name,
+            completed: false,
+          },
+        })
+      )) as GraphQLResult<CreateTodoMutation>;
+      router.push("/");
+    } catch (error) {
+      console.error("Error creating todo:", error);
+    }
+  };
 
   return (
     <>
@@ -38,15 +41,13 @@ const TodosNew = () => {
         </Grid>
         <Grid item md={6}>
           <Link href="/">
-            <Button component="a" variant="contained">
-              Back
-            </Button>
+            <Button variant="contained">Back</Button>
           </Link>
         </Grid>
       </Grid>
-      {/* <Form onSubmit={onSubmit} /> */}
+      <Form onSubmit={onSubmit} />
     </>
   );
 };
 
-export default withAuthenticator(TodosNew);
+export default withAuthenticator(TodoNewPage);

@@ -8,13 +8,13 @@ import { Amplify, API, graphqlOperation } from "aws-amplify";
 import awsconfig from "@/aws-exports";
 import { GraphQLResult } from "@aws-amplify/api";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import { Container, Button, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { ListTodosQuery } from "@/API";
 
 import { useRecoilState } from "recoil";
 import { todosState } from "@/store/todoState";
 import { listTodos } from "@/graphql/queries";
-import { Todo } from "@/components/Todo";
+import { Todo } from "@/components/todo";
 
 Amplify.configure(awsconfig);
 
@@ -24,7 +24,10 @@ const TodosIndex = () => {
   useEffect(() => {
     const asyncFunc = async () => {
       const result = (await API.graphql(
-        graphqlOperation(listTodos)
+        graphqlOperation(listTodos, {
+          limit: 100,
+          sortDirection: "DESC",
+        })
       )) as GraphQLResult<ListTodosQuery>;
 
       setTodos(result?.data?.listTodos?.items || []);

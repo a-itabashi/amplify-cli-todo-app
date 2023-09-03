@@ -3,7 +3,6 @@ import Link from "next/link";
 import { API, graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { DeleteTodoMutation, UpdateTodoMutation } from "@/API";
 import { deleteTodo, updateTodo } from "@/graphql/mutations";
-import { listTodos } from "@/graphql/queries";
 
 import {
   Card,
@@ -20,27 +19,26 @@ import { useRecoilState } from "recoil";
 import { todosState } from "@/store/todoState";
 import { FC } from "react";
 
-// type Todo = {
-//   __typename: "Todo";
-//   id: string;
-//   name: string;
-//   completed: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-// } | null;
-type Todo = {
-  __typename: "Todo";
+type TodoType = {
   id: string;
   name: string;
   completed: boolean;
   createdAt: string;
   updatedAt: string;
+} | null;
+
+type TodoProps = {
+  todo: TodoType;
 };
 
-const Todo: FC<Todo> = ({ todo }) => {
+const Todo: FC<TodoProps> = ({ todo }) => {
   const [todos, setTodos] = useRecoilState(todosState);
 
+  console.log(todos);
+
   const onArchive = async () => {
+    if (!todo) return;
+
     (await API.graphql(
       graphqlOperation(deleteTodo, {
         input: {
@@ -52,33 +50,33 @@ const Todo: FC<Todo> = ({ todo }) => {
   };
 
   const handleChangeDone = async (e: { target: { checked: boolean } }) => {
-    const isChecked = e.target.checked; // チェックボックスの状態を取得
+    if (!todo) return;
+
+    const isChecked = e.target.checked;
 
     try {
-      // AppSync APIを通じてTodoを更新
       const result = (await API.graphql(
         graphqlOperation(updateTodo, {
           input: {
             id: todo.id,
-            completed: isChecked, // true or false
+            completed: isChecked,
           },
         })
       )) as GraphQLResult<UpdateTodoMutation>;
-      console.log(result);
-      // 更新されたTodoを取得して、ローカルのstateを更新
       const updatedTodo = result?.data?.updateTodo;
-      // setTodos(todos.map((item) => (item.id === todo.id ? updatedTodo : item)));
       setTodos(
-        todos
-          .map((item) =>
-            item ? (item.id === todo.id ? updatedTodo : item) : undefined
-          )
-          .filter((item): item is Todo => item !== undefined)
+        todos.map((item) =>
+          item && item.id === todo.id && updatedTodo ? updatedTodo : item
+        )
       );
     } catch (error) {
       console.error("Error updating todo:", error);
     }
   };
+
+  if (!todo) {
+    return null;
+  }
 
   return (
     <Grid item md={6}>

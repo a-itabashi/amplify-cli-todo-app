@@ -1,54 +1,59 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, Grid } from "@mui/material";
+import { FC } from "react";
 
-const Form = (props: any) => {
-  //   const { onSubmit, values } = props;
-  //   const { register, handleSubmit, errors, reset, setValue } = useForm();
+type Inputs = {
+  name: string;
+};
 
-  //   useEffect(() => {
-  //     if (!values) return;
-  //     setValue("name", values.name);
-  //   });
+type FormProps = {
+  onSubmit: (name: string) => void;
+};
 
-  //   const handler = (newTodo) => {
-  //     onSubmit(newTodo);
-  //     reset();
-  //   };
+const Form: FC<FormProps> = (props) => {
+  // const { control, handleSubmit } = useForm<Inputs>({
+  //   defaultValues: { name: "デフォルトのtodo" },
+  // });
+  const { control, handleSubmit } = useForm<Inputs>();
 
-  const errorMessage = (errors: any, field: any) => {
-    // const message = [];
-    // // if (errors[field]?.type == "required") {
-    // //   message.push("required");
-    // // }
-    // // if (errors[field]?.type == "maxLength") {
-    // //   message.push("Exceeded 20 characters");
-    // // }
-    // return message.join(", ");
+  const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+    props.onSubmit(data.name);
+  };
+
+  const validationRules = {
+    name: {
+      required: "タイトルを入力してください。",
+      maxLength: { value: 30, message: "30文字以内で入力をしてください。" },
+    },
   };
 
   return (
-    // <form onSubmit={handleSubmit(handler)}>
-    //   <Grid container direction="column" spacing={2}>
-    //     <Grid item md={6}>
-    //       <TextField
-    //         label="Name"
-    //         name="name"
-    //         fullWidth
-    //         // inputRef={register({ required: true, maxLength: 20 })}
-    //         // error={Boolean(errors.name)}
-    //         helperText={errorMessage(errors, "name")}
-    //       />
-    //     </Grid>
-    //     <Grid item md={6}>
-    //       <Button type="submit" variant="contained" color="primary">
-    //         Save
-    //       </Button>
-    //     </Grid>
-    //   </Grid>
-    // </form>
-    <></>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Grid container direction="column" spacing={2}>
+        <Grid item md={6}>
+          <Controller
+            name="name"
+            control={control}
+            rules={validationRules.name}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                type="text"
+                label="TODOのタイトル"
+                error={fieldState.invalid}
+                helperText={fieldState.error?.message}
+              />
+            )}
+          />
+        </Grid>
+        <Grid item md={6}>
+          <Button type="submit" variant="contained" color="primary">
+            Save
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
   );
 };
 

@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 type Todo = {
-  __typename: "Todo";
   id: string;
   name: string;
   completed: boolean;
