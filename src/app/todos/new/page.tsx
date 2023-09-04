@@ -1,15 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Button, Grid } from "@mui/material";
+import { Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Amplify } from "aws-amplify";
 import awsconfig from "@/aws-exports";
 import { API, graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { CreateTodoMutation } from "@/API";
 import { createTodo } from "@/graphql/mutations";
-
 import Form from "@/components/Form";
 
 Amplify.configure(awsconfig);
@@ -35,17 +34,12 @@ const TodoNewPage = () => {
 
   return (
     <>
-      <Grid container direction="column" spacing={2}>
-        <Grid item md={6}>
-          <h1>Todos</h1>
-        </Grid>
-        <Grid item md={6}>
-          <Link href="/">
-            <Button variant="contained">Back</Button>
-          </Link>
-        </Grid>
+      <Typography variant="h5" sx={{ marginTop: 2 }}>
+        Todoの新規登録
+      </Typography>
+      <Grid sx={{ marginTop: 1 }}>
+        <Form onSubmit={onSubmit} />
       </Grid>
-      <Form onSubmit={onSubmit} />
     </>
   );
 };

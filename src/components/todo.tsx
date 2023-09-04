@@ -34,8 +34,6 @@ type TodoProps = {
 const Todo: FC<TodoProps> = ({ todo }) => {
   const [todos, setTodos] = useRecoilState(todosState);
 
-  console.log(todos);
-
   const onArchive = async () => {
     if (!todo) return;
 

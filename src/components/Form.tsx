@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { TextField, Button, Grid } from "@mui/material";
 import { FC } from "react";
@@ -9,13 +8,13 @@ type Inputs = {
 
 type FormProps = {
   onSubmit: (name: string) => void;
+  name?: string;
 };
 
 const Form: FC<FormProps> = (props) => {
-  // const { control, handleSubmit } = useForm<Inputs>({
-  //   defaultValues: { name: "デフォルトのtodo" },
-  // });
-  const { control, handleSubmit } = useForm<Inputs>();
+  const { control, handleSubmit, setValue } = useForm<Inputs>({
+    defaultValues: { name: props.name || "" },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     props.onSubmit(data.name);

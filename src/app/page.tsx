@@ -37,7 +37,7 @@ const TodosIndex = () => {
 
   return (
     <>
-      <Grid container direction="column" spacing={2}>
+      <Grid container direction="column" spacing={2} sx={{ marginTop: 1 }}>
         <Grid item md={6}>
           <h1>Todos</h1>
         </Grid>
@@ -49,7 +49,7 @@ const TodosIndex = () => {
           </Link>
         </Grid>
       </Grid>
-      <Grid container direction="column" spacing={2}>
+      <Grid container direction="column" spacing={2} sx={{ marginTop: 1 }}>
         {todos.map((todo) =>
           todo ? <Todo key={todo.id} todo={todo} /> : null
         )}
