@@ -1,9 +1,7 @@
 import Link from "next/link";
-
 import { API, graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { DeleteTodoMutation, UpdateTodoMutation } from "@/API";
 import { deleteTodo, updateTodo } from "@/graphql/mutations";
-
 import {
   Card,
   CardActions,
@@ -14,7 +12,6 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-
 import { useRecoilState } from "recoil";
 import { todosState } from "@/store/todoState";
 import { FC } from "react";

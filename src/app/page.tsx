@@ -1,16 +1,13 @@
 "use client";
 import React from "react";
 import { useEffect } from "react";
-
 import Link from "next/link";
-
 import { Amplify, API, graphqlOperation } from "aws-amplify";
 import awsconfig from "@/aws-exports";
 import { GraphQLResult } from "@aws-amplify/api";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { Button, Grid } from "@mui/material";
 import { ListTodosQuery } from "@/API";
-
 import { useRecoilState } from "recoil";
 import { todosState } from "@/store/todoState";
 import { listTodos } from "@/graphql/queries";
@@ -24,10 +21,7 @@ const TodosIndex = () => {
   useEffect(() => {
     const asyncFunc = async () => {
       const result = (await API.graphql(
-        graphqlOperation(listTodos, {
-          limit: 100,
-          sortDirection: "DESC",
-        })
+        graphqlOperation(listTodos)
       )) as GraphQLResult<ListTodosQuery>;
 
       setTodos(result?.data?.listTodos?.items || []);
